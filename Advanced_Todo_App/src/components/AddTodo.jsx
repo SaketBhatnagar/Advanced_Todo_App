@@ -5,7 +5,7 @@ const AddTodo = () => {
   const { todolist, handleAddTodo } = useContext(TodoStore);
   const [title, setTitle] = useState("");
   const [details, setDetails] = useState("");
-  console.log(todolist);
+  // console.log(todolist);
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -18,6 +18,8 @@ const AddTodo = () => {
     } else {
       alert("Fields Are Empty!!!!");
     }
+    setTitle("");
+    setDetails("");
   };
   return (
     <form

@@ -7,7 +7,7 @@ const Overlay = () => {
     useContext(TodoStore);
   const { id, title, details, n_characters, n_words, n_sentences, createdAt } =
     showTodoData;
-  console.log(showTodoData);
+  // console.log(showTodoData);
   return (
     <>
       {showreadoverlay && (

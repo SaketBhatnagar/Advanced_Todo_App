@@ -15,8 +15,16 @@ const TodoContext = ({ children }) => {
       createdAt: `Date : ${new Date().toLocaleDateString()} Time : ${new Date().toLocaleTimeString()}`,
     },
   ]);
+
+  //! Overlay States
+  //? States to handle Read overlay
   const [showreadoverlay, setShowreadOverlay] = useState(false);
   const [showTodoData, setShowTodoData] = useState({});
+
+  //? States to handle Delete overlay
+  const [showdeleteoverlay, setShowdeleteOverlay] = useState(false);
+  // we will use deletetodo state to store id of todo that we want to delete!
+  const [deletetodo, setDeleteTodo] = useState(false);
 
   // if we need changes , we will do while working on project
   const handleAddTodo = ({
@@ -41,7 +49,14 @@ const TodoContext = ({ children }) => {
     ]);
   };
   const handleReadTodo = () => {};
-  const handleDeleteTodo = () => {};
+
+  const handleDeleteTodo = id => {
+    console.log("handleDeleteTodo id : ", id);
+    setTodolist(todolist.filter(value => value.id != id));
+    setShowdeleteOverlay(false);
+    setShowreadOverlay(false);
+  };
+
   const handleUpdateTodo = () => {};
   // control extra screen
 
@@ -64,6 +79,10 @@ const TodoContext = ({ children }) => {
         showTodoData,
         showreadoverlay,
         setShowreadOverlay,
+        deletetodo,
+        showdeleteoverlay,
+        setShowdeleteOverlay,
+        setDeleteTodo,
       }}
     >
       {children}

@@ -7,14 +7,17 @@ const Overlay = () => {
     useContext(TodoStore);
   const { id, title, details, n_characters, n_words, n_sentences, createdAt } =
     showTodoData;
-  // console.log(showTodoData);
+  // console.log("read....");
   return (
     <>
       {showreadoverlay && (
-        <section
-          onClick={() => setShowreadOverlay(false)}
-          className="h-[100vh] w-[100vw]  bg-[#000a] fixed top-0 left-0 "
-        >
+        <section className="h-[100vh] w-[100vw]  bg-[#000a] fixed top-0 left-0 ">
+          <span
+            className="text-white bg-black px-3  py-2 text-2xl fixed z-[5] top-7 right-7  cursor-pointer"
+            onClick={() => setShowreadOverlay(false)}
+          >
+            X
+          </span>
           <article className="w-[100%] flex justify-center items-center h-[90%]">
             <div className="flex flex-col w-[90%]  h-[80%]  gap-[5vh] p-4 rounded-md border-slate-300 border-2 shadow-lg bg-white">
               <h3 className="text-3xl bg-slate-200 rounded-md p-2 font-semibold text-center">

@@ -3,8 +3,15 @@ import { TodoStore } from "../context/TodoContext";
 import { MdDeleteForever } from "react-icons/md";
 import { BiSolidEdit } from "react-icons/bi";
 const ShowAllTodos = () => {
-  const { todolist, handleReadOverlay, setShowdeleteOverlay, setDeleteTodo } =
-    useContext(TodoStore);
+  const {
+    todolist,
+    handleReadOverlay,
+    setShowdeleteOverlay,
+    setShowreadOverlay,
+    setDeleteTodo,
+    setUpdateTodo,
+    setShowupdateOverlay,
+  } = useContext(TodoStore);
   //   console.log("from show todos : ", todolist);
   return (
     <section className=" w-[100%] flex justify-center items-center p-8">
@@ -56,7 +63,13 @@ const ShowAllTodos = () => {
                     >
                       <MdDeleteForever className="text-2xl text-white" />
                     </button>
-                    <button className="bg-yellow-500 p-2 rounded-lg hover:bg-yellow-700 ">
+                    <button
+                      className="bg-yellow-500 p-2 rounded-lg hover:bg-yellow-700 "
+                      onClick={() => {
+                        setShowupdateOverlay(true);
+                        setUpdateTodo({ id, title, details, createdAt });
+                      }}
+                    >
                       <BiSolidEdit className="text-2xl text-white" />
                     </button>
                   </div>

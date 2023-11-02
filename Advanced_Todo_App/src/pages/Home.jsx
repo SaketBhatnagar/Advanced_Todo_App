@@ -4,6 +4,7 @@ import { TodoStore } from "../context/TodoContext";
 import ShowAllTodos from "../components/ShowAllTodos";
 import ReadOverlay from "./ReadOverlay";
 import DeleteOverlay from "./DeleteOverlay";
+import UpdateOverlay from "./UpdateOverlay";
 
 const Home = () => {
   const { todolist } = useContext(TodoStore);
@@ -15,6 +16,7 @@ const Home = () => {
         <ReadOverlay />
         <ShowAllTodos />
         <DeleteOverlay />
+        <UpdateOverlay />
       </article>
     </section>
   );

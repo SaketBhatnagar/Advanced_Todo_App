@@ -13,6 +13,7 @@ const TodoContext = ({ children }) => {
       n_words: 3,
       n_sentences: 1,
       createdAt: `Date : ${new Date().toLocaleDateString()} Time : ${new Date().toLocaleTimeString()}`,
+      updateAt: null,
     },
   ]);
 
@@ -25,6 +26,11 @@ const TodoContext = ({ children }) => {
   const [showdeleteoverlay, setShowdeleteOverlay] = useState(false);
   // we will use deletetodo state to store id of todo that we want to delete!
   const [deletetodo, setDeleteTodo] = useState(false);
+
+  //? States to handle Update overlay
+  const [showupdateoverlay, setShowupdateOverlay] = useState(false);
+  // we will use updatetodo state to store data of todo that we want to update!
+  const [updatetodo, setUpdateTodo] = useState(false);
 
   // if we need changes , we will do while working on project
   const handleAddTodo = ({
@@ -57,11 +63,34 @@ const TodoContext = ({ children }) => {
     setShowreadOverlay(false);
   };
 
-  const handleUpdateTodo = () => {};
+  const handleUpdateTodo = ({ id, title, details, createdAt }) => {
+    // console.log("updating....");
+    // console.log(title);
+    // console.log(details);
+    console.log(todolist);
+    const words = details.split(" ").length;
+    const characters = details.split("").length;
+    const sentences = details.split(".").length - 1;
+    console.log(
+      todolist.filter(value => {
+        if (value.id == id) {
+          value.title = title;
+          value.details = details;
+          value.updateAt = `Date : ${new Date().toLocaleDateString()} Time : ${new Date().toLocaleTimeString()}`;
+          value.n_words = words;
+          value.n_sentences = sentences;
+          value.n_characters = characters;
+        }
+      })
+    );
+    setTodolist(todolist);
+    setShowupdateOverlay(false);
+    console.log(todolist);
+  };
   // control extra screen
 
   const handleReadOverlay = id => {
-    console.log(id);
+    // console.log(id);
     const data = todolist.filter(value => value.id === id);
     setShowTodoData({ ...data[0] });
     setShowreadOverlay(true);
@@ -83,6 +112,10 @@ const TodoContext = ({ children }) => {
         showdeleteoverlay,
         setShowdeleteOverlay,
         setDeleteTodo,
+        updatetodo,
+        showupdateoverlay,
+        setUpdateTodo,
+        setShowupdateOverlay,
       }}
     >
       {children}

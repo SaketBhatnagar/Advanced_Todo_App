@@ -17,6 +17,12 @@ const TodoContext = ({ children }) => {
     },
   ]);
 
+  //! Let's maintain state to store searched text
+  const [search, setSearch] = useState([]);
+
+  //! Let's maintain state to show and hide AddTodo Component
+  const [showAddTodo, setShowaddtodo] = useState(true);
+
   //! Overlay States
   //? States to handle Read overlay
   const [showreadoverlay, setShowreadOverlay] = useState(false);
@@ -58,7 +64,13 @@ const TodoContext = ({ children }) => {
 
   const handleDeleteTodo = id => {
     console.log("handleDeleteTodo id : ", id);
-    setTodolist(todolist.filter(value => value.id != id));
+    setTodolist(
+      todolist.filter(value => {
+        if (value.id != id) console.log("delete ", value.title);
+
+        return value.id != id;
+      })
+    );
     setShowdeleteOverlay(false);
     setShowreadOverlay(false);
   };
@@ -91,9 +103,23 @@ const TodoContext = ({ children }) => {
 
   const handleReadOverlay = id => {
     // console.log(id);
+
     const data = todolist.filter(value => value.id === id);
     setShowTodoData({ ...data[0] });
     setShowreadOverlay(true);
+  };
+
+  const handleSearch = searchdata => {
+    // console.log(searchdata);
+    setSearch(
+      todolist.filter(value => {
+        if (
+          value.title.toLowerCase().includes(searchdata.toLowerCase()) ||
+          value.details.toLowerCase().includes(searchdata.toLowerCase())
+        )
+          return true;
+      })
+    );
   };
 
   return (
@@ -116,6 +142,11 @@ const TodoContext = ({ children }) => {
         showupdateoverlay,
         setUpdateTodo,
         setShowupdateOverlay,
+        showAddTodo,
+        setShowaddtodo,
+        search,
+        setSearch,
+        handleSearch,
       }}
     >
       {children}

@@ -1,21 +1,13 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
+import { BiLogIn } from "react-icons/bi";
 
 export const TodoStore = createContext([]);
 
 const TodoContext = ({ children }) => {
   //! Basic requirements
-  const [todolist, setTodolist] = useState([
-    {
-      id: `1`,
-      title: "lksachkjhc",
-      details: "dsvsdv",
-      n_characters: 2,
-      n_words: 3,
-      n_sentences: 1,
-      createdAt: `Date : ${new Date().toLocaleDateString()} Time : ${new Date().toLocaleTimeString()}`,
-      updateAt: null,
-    },
-  ]);
+  const [todolist, setTodolist] = useState(
+    JSON.parse(localStorage.getItem("todolist"))
+  );
 
   //! Let's maintain state to store searched text
   const [search, setSearch] = useState([]);
@@ -52,6 +44,7 @@ const TodoContext = ({ children }) => {
       {
         id: `${new Date()}`,
         title,
+        status: "pending",
         details,
         n_characters,
         n_words,
@@ -111,16 +104,48 @@ const TodoContext = ({ children }) => {
 
   const handleSearch = searchdata => {
     // console.log(searchdata);
-    setSearch(
-      todolist.filter(value => {
-        if (
-          value.title.toLowerCase().includes(searchdata.toLowerCase()) ||
-          value.details.toLowerCase().includes(searchdata.toLowerCase())
-        )
-          return true;
+    if (searchdata == "/:/done") {
+      console.log("searching todo with done status...");
+      setSearch(
+        todolist.filter(value => {
+          if (value.status == "done") return true;
+        })
+      );
+    } else if (searchdata == "/:/pending") {
+      setSearch(
+        todolist.filter(value => {
+          if (value.status == "pending") return true;
+        })
+      );
+    } else
+      setSearch(
+        todolist.filter(value => {
+          if (
+            value.title.toLowerCase().includes(searchdata.toLowerCase()) ||
+            value.details.toLowerCase().includes(searchdata.toLowerCase())
+          )
+            return true;
+        })
+      );
+  };
+
+  // this methods will used to update status of todo
+  const handleStatus = id => {
+    setTodolist(
+      todolist.map(value => {
+        if (value.id == id) {
+          if (value.status != "done") value.status = "done";
+          else if (value.status == "done") value.status = "pending";
+        }
+        return value;
       })
     );
   };
+
+  useEffect(() => {
+    // Storing data in JSON format
+    localStorage.setItem("todolist", JSON.stringify(todolist));
+  }, [todolist]);
 
   return (
     <TodoStore.Provider
@@ -147,6 +172,7 @@ const TodoContext = ({ children }) => {
         search,
         setSearch,
         handleSearch,
+        handleStatus,
       }}
     >
       {children}

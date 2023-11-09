@@ -34,15 +34,8 @@ const Overlay = () => {
                   <span className="text-center">Words : {n_words}</span>
                   <span className="text-center">Sentences : {n_sentences}</span>
                 </div>
-                <div className="flex justify-around  w-[100%]">
-                  <button className="bg-red-500 p-2 rounded-lg hover:bg-red-700 ">
-                    <MdDeleteForever className="text-2xl text-white" />
-                  </button>
-                  <button className="bg-yellow-500 p-2 rounded-lg hover:bg-yellow-700 ">
-                    <BiSolidEdit className="text-2xl text-white" />
-                  </button>
-                </div>
               </div>
+              <p className="text-slate-400 text-xl text-center">{createdAt}</p>
             </div>
           </article>
         </section>
